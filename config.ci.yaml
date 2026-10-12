@@ -1,0 +1,82 @@
+# Configuration utilisée par GitHub Actions (aucun secret ici).
+demo: false
+
+paper:
+  title: "Signal Matin"
+  subtitle: "Le journal anti-scroll"
+  motto: "Voir clair avant de voir l'écran."
+
+modules:
+  weather: true
+  calendar: false
+  tasks: false
+  news: true
+  tech: true
+  rss: true
+  games: true
+  tech_vocabulary: true
+  recommendations: false
+
+weather:
+  location: "Boujan-sur-Libron"
+  latitude: 43.3736
+  longitude: 3.2856
+
+calendar:
+  ics: []
+  google:
+    enabled: false
+    calendar_id: "primary"
+    credentials_file: "${GOOGLE_CREDENTIALS_FILE}"
+    token_file: "${GOOGLE_TOKEN_FILE}"
+
+tasks:
+  priorities: []
+  reminders: []
+
+news:
+  limit: 12
+  max_age_hours: 120
+  feeds:
+    - name: "Google Actualités"
+      category: "Boujan-sur-Libron"
+      url: "https://news.google.com/rss/search?q=Boujan-sur-Libron&hl=fr&gl=FR&ceid=FR:fr"
+    - name: "Franceinfo"
+      category: "Tennis"
+      url: "https://www.francetvinfo.fr/sports/tennis.rss"
+    - name: "Le Monde"
+      category: "Politique"
+      url: "https://www.lemonde.fr/politique/rss_full.xml"
+    - name: "Franceinfo"
+      category: "Politique"
+      url: "https://www.francetvinfo.fr/politique.rss"
+
+tech:
+  limit: 8
+  max_age_hours: 96
+  feeds:
+    - name: "Numerama"
+      category: "Nouvelles technologies"
+      url: "https://www.numerama.com/feed/"
+    - name: "ActuIA"
+      category: "Intelligence artificielle"
+      url: "https://www.actuia.com/feed/"
+    - name: "Le Monde Pixels"
+      category: "Nouvelles technologies"
+      url: "https://www.lemonde.fr/pixels/rss_full.xml"
+    - name: "Frandroid"
+      category: "Nouvelles technologies"
+      url: "https://www.frandroid.com/feed"
+
+recommendations: []
+personal:
+  greeting: "Bonjour."
+  note: ""
+  free_window: ""
+  quote:
+    text: ""
+    author: ""
+
+printing:
+  printer: ""
+  duplex: false

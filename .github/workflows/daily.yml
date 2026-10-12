@@ -1,0 +1,41 @@
+name: journal-quotidien
+
+on:
+  schedule:
+    # 7h00 à Paris : 5h UTC en été, 6h UTC en hiver
+    - cron: "0 5 * * *"
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Paris
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - run: signal-matin preview --live --no-open --config config.ci.yaml
+      - name: Préparer le site
+        run: |
+          mkdir _site
+          cp output/preview/*-signal-matin.html _site/index.html
+      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/deploy-pages@v4
+        id: deployment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
