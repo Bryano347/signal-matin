@@ -39,3 +39,17 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
+  notifier:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notification iPhone (uniquement vers 7h, heure de Paris)
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          heure=$(TZ=Europe/Paris date +%H)
+          if [ -n "$NTFY_TOPIC" ] && [ "$heure" = "07" ]; then
+            curl -s -H "Title: Signal Matin" -H "Click: https://bryano347.github.io/signal-matin/" \
+              -d "Ton journal du jour est prêt." "https://ntfy.sh/$NTFY_TOPIC"
+          fi
